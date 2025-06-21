@@ -20,7 +20,7 @@ export class LineChart extends BaseChart {
         const spacing = Math.floor(
             this.options.size.width / (items.length + 1),
         );
-        const startX = this.options.pos.x + spacing;
+        const startX = this.options.pos.x;
         const startY = this.options.pos.y;
         const maxHeight = Math.max(...items.map((item) => item.value))*1.2;
         const dots: { x: number; y: number; dotColor: Color; dotSize?: number }[] = [];

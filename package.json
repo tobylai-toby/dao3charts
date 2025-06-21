@@ -1,6 +1,6 @@
 {
   "name": "@dao3fun/charts",
-  "version": "0.0.3",
+  "version": "0.0.3-fix",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",

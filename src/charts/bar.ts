@@ -22,7 +22,7 @@ export class BarChart extends BaseChart {
             barWidth = Math.floor(this.options.size.width / (items.length*1.5));
         }
         const spacing = Math.floor((this.options.size.width - (barWidth * items.length)) / (items.length + 1));
-        const startX = this.options.pos.x + spacing;
+        const startX = this.options.pos.x;
         const startY = this.options.pos.y;
         const maxHeight = Math.max(...items.map(item => item.value))*1.2;
         for (let i = 0; i < items.length; i++) {
