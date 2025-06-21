@@ -1,0 +1,27 @@
+{
+  "name": "@dao3fun/charts",
+  "version": "0.0.3",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "bun-dts": "^0.1.70"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "author": "Tobylai",
+  "scripts": {
+    "build:all": "bun _build.ts",
+    "prepublishOnly": "bun build:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tobylai-toby/dao3charts.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

@@ -1,0 +1,7 @@
+_build.ts
+test
+*.lock
+package-lock.json
+!dist/
+types/
+node_modules/
