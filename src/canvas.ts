@@ -1,6 +1,11 @@
 export interface CanvasOptions {
-    node: UiNode;
+    node: UiRenderable;
     pixelSize?: number;
+    autoResizeOptions?: {
+        enabled: boolean;
+        maxWidth: number;
+        maxHeight: number;
+    };
 }
 export interface Color {
     rgb?: Vec3;
@@ -21,13 +26,24 @@ export class Canvas {
                 node.parent = undefined;
             }
             const pixelNode = UiBox.create();
-            pixelNode.size.offset.x = this.options.pixelSize!;
-            pixelNode.size.offset.y = this.options.pixelSize!;
+
             pixelNode.backgroundColor.copy(color.rgb);
             pixelNode.backgroundOpacity = color.a || 1;
             pixelNode.parent = this.options.node;
-            pixelNode.position.offset.x = x * this.options.pixelSize!;
-            pixelNode.position.offset.y = y * this.options.pixelSize!;
+            if (this.options.autoResizeOptions?.enabled) {
+                const px = 1 / (this.options.autoResizeOptions?.maxWidth || 1),
+                    py = 1 / (this.options.autoResizeOptions?.maxHeight || 1);
+                pixelNode.position.offset.x = pixelNode.position.offset.y = pixelNode.size.offset.x = pixelNode.size.offset.y = 0;
+                pixelNode.position.scale.x = x * px;
+                pixelNode.position.scale.y = y * py;
+                pixelNode.size.scale.x = px;
+                pixelNode.size.scale.y = py;
+            } else {
+                pixelNode.position.offset.x = x * this.options.pixelSize!;
+                pixelNode.position.offset.y = y * this.options.pixelSize!;
+                pixelNode.size.offset.x = this.options.pixelSize!;
+                pixelNode.size.offset.y = this.options.pixelSize!;
+            }
             this.nodeMap.set(`${x},${y}`, pixelNode);
         } else {
             const node = this.nodeMap.get(`${x},${y}`);
@@ -35,6 +51,23 @@ export class Canvas {
                 node.parent = undefined;
             }
             this.nodeMap.delete(`${x},${y}`);
+        }
+    }
+
+    autoResize(): void {
+        if (this.options.autoResizeOptions?.enabled) {
+            // re assign all pos&size of pixelNode
+            this.pixelMap.forEach((color:Color,pixel:string)=>{
+                const pixelNode=this.nodeMap.get(pixel)!;
+                const [x,y]=pixel.split(",").map(Number);
+                const px = 1 / (this.options.autoResizeOptions?.maxWidth || 1),
+                    py = 1 / (this.options.autoResizeOptions?.maxHeight || 1);
+                pixelNode.position.offset.x = pixelNode.position.offset.y = pixelNode.size.offset.x = pixelNode.size.offset.y = 0;
+                pixelNode.position.scale.x = x * px;
+                pixelNode.position.scale.y = y * py;
+                pixelNode.size.scale.x = px;
+                pixelNode.size.scale.y = py;
+            });
         }
     }
 
