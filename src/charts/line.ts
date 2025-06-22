@@ -1,20 +1,41 @@
 import type { Color } from "../canvas";
 import { BaseChart, type BaseChartOptions } from "./base";
 
+/**
+ * 折线图配置选项
+ */
 export interface LineChartOptions extends BaseChartOptions {
+    /** 线条颜色（可选） */
     lineColor?: Color;
 }
+/**
+ * 折线图单项数据
+ */
 export interface LineChartDrawItem {
+    /** 数值 */
     value: number;
+    /** 点的颜色 */
     dotColor: Color;
+    /** 点的大小（可选） */
     dotSize?: number;
 }
 
+/**
+ * 折线图类
+ */
 export class LineChart extends BaseChart {
+    /**
+     * 构造函数
+     * @param options 折线图配置选项
+     */
     constructor(public options: LineChartOptions) {
         super(options);
     }
 
+    /**
+     * 绘制折线图
+     * @param param0 items为折线图数据项数组
+     */
     draw({ items }: { items: LineChartDrawItem[] }): void {
         this.clear();
         const spacing = Math.floor(
@@ -49,7 +70,7 @@ export class LineChart extends BaseChart {
                 color: dot.dotColor,
             });
         }
-        // draw coordinates
+        // 绘制坐标轴
         this.options.canvas.drawLine({
             start: { x: startX, y: startY },
             end: { x: startX, y: startY + this.options.size.height },
