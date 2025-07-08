@@ -2,6 +2,8 @@
 Draw charts like bar,line,pie on Arena(dao3.fun)
 在神岛Arena中绘制柱状图、折线图、饼状图等图表。
 
+[文档](./docs/api.md)
+
 ## 安装
 ```bash
 # npm
